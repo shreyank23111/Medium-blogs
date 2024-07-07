@@ -10,8 +10,8 @@ export const Blogs = () => {
     return (
       <div>
         <Appbar />
-        <div className="flex justify-center">
-          <div>
+        <div className="flex justify-center px-4 sm:px-6 lg:px-8">
+          <div className="w-full max-w-3xl">
             <BlogSkeleton />
             <BlogSkeleton />
             <BlogSkeleton />
@@ -26,8 +26,8 @@ export const Blogs = () => {
   return (
     <div>
       <Appbar />
-      <div className="flex justify-center">
-        <div>
+      <div className="flex justify-center px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-3xl">
           {blogs.length > 0 ? (
             blogs.map((blog) => (
               <BlogCard

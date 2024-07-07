@@ -4,6 +4,7 @@ import { Appbar } from "../Components/Appbar/nav";
 import { Spinner } from "../Components/Spinner";
 import { FullBlog } from "../Components/Blog/FullBlog";
 
+
 export const Blog = () => {
   const { id } = useParams<{ id: string }>();
   const { loading, blog } = useBlog({ id: id || "No id" });
@@ -11,7 +12,7 @@ export const Blog = () => {
   if (loading || !blog) {
     return (
       <div>
-        <Appbar />
+        <Appbar/>
         <div className="h-screen flex flex-col justify-center">
           <div className="flex justify-center">
             <Spinner />

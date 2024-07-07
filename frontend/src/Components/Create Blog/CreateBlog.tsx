@@ -10,50 +10,58 @@ export const CreateBlog = () => {
   const [userInputs, setUserInputs] = useState<CreateBlogInput>({
     title: "",
     content: ""
-  })
+  });
 
-  async function sendRequest(){
-    try{
+  async function sendRequest() {
+    try {
       const response = await axios.post(`${BACKEND_URL}/api/v1/blogs/create-blog`, userInputs, {
         headers: {
-          "Content-Type": "application/json"
+          Authorization: "Bearer " + (localStorage.getItem("token") || ""),
         }
-      })
-      localStorage.setItem("token", response.data.token)
+      });
+      console.log(response.data);
       navigate("/blogs");
-    } catch(err) {
+    } catch (err) {
       alert("Unable to create blog");
       console.log("Create blog Error: ", err);
-      
     }
   }
-  return (
-    <form onSubmit={sendRequest} className="flex flex-wrap items-center">
-    <div className="mb-4 flex-grow"> {/* Use flex-grow to allow the input fields to expand */}
-     <BlogInputs label="Title" placeholder="a short crisp title" onChange={(e)=> {
-      setUserInputs({
-        ...userInputs,
-        title: e.target.value
-      })
-     }}/>
-    </div>
-    <div className="mb-4 flex-grow ml-4"> {/* Use flex-grow to allow the input fields to expand */}
-      <BlogInputs label="Content" placeholder="detail info" onChange={(e)=> {
-        setUserInputs({
-          ...userInputs,
-          content: e.target.value
-        })
-      }}/>
-    </div>
-    <div className="mb-4 flex-grow ml-3">
-    <button
-      type="submit"
-      className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline ml-2" 
-    >
-      Post
-    </button>
-    </div>
-  </form>
-  )
-}
 
+  return (
+    <div className="flex flex-col items-center bg-slate-100 p-6 border rounded-lg w-full">
+      <div className="mb-4 w-full">
+        <BlogInputs
+          label="Title"
+          placeholder="a short crisp title"
+          onChange={(e) => {
+            setUserInputs({
+              ...userInputs,
+              title: e.target.value
+            });
+          }}
+        />
+      </div>
+      <div className="mb-4 w-full">
+        <BlogInputs
+          label="Content"
+          placeholder="detail info"
+          onChange={(e) => {
+            setUserInputs({
+              ...userInputs,
+              content: e.target.value
+            });
+          }}
+        />
+      </div>
+      <div className="mb-4 w-full flex justify-end">
+        <button
+          onClick={sendRequest}
+          type="submit"
+          className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        >
+          Post
+        </button>
+      </div>
+    </div>
+  );
+};
