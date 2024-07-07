@@ -1,0 +1,59 @@
+import { CreateBlogInput } from "@shreyank23/medium-common";
+import { useState } from "react";
+import axios from "axios";
+import { BlogInputs } from "./BlogInputs";
+import { useNavigate } from "react-router-dom";
+import { BACKEND_URL } from "../../config";
+
+export const CreateBlog = () => {
+  const navigate = useNavigate();
+  const [userInputs, setUserInputs] = useState<CreateBlogInput>({
+    title: "",
+    content: ""
+  })
+
+  async function sendRequest(){
+    try{
+      const response = await axios.post(`${BACKEND_URL}/api/v1/blogs/create-blog`, userInputs, {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      localStorage.setItem("token", response.data.token)
+      navigate("/blogs");
+    } catch(err) {
+      alert("Unable to create blog");
+      console.log("Create blog Error: ", err);
+      
+    }
+  }
+  return (
+    <form onSubmit={sendRequest} className="flex flex-wrap items-center">
+    <div className="mb-4 flex-grow"> {/* Use flex-grow to allow the input fields to expand */}
+     <BlogInputs label="Title" placeholder="a short crisp title" onChange={(e)=> {
+      setUserInputs({
+        ...userInputs,
+        title: e.target.value
+      })
+     }}/>
+    </div>
+    <div className="mb-4 flex-grow ml-4"> {/* Use flex-grow to allow the input fields to expand */}
+      <BlogInputs label="Content" placeholder="detail info" onChange={(e)=> {
+        setUserInputs({
+          ...userInputs,
+          content: e.target.value
+        })
+      }}/>
+    </div>
+    <div className="mb-4 flex-grow ml-3">
+    <button
+      type="submit"
+      className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline ml-2" 
+    >
+      Post
+    </button>
+    </div>
+  </form>
+  )
+}
+
