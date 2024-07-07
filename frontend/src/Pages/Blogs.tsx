@@ -1,4 +1,4 @@
-import { Appbar } from "../Components/Appbar/nav";
+
 import { useBlogs } from "../Hooks";
 import { BlogSkeleton } from "../Components/Blog/BlogSkeleton";
 import { BlogCard } from "../Components/Blog/BlogCard";
@@ -9,7 +9,6 @@ export const Blogs = () => {
   if (loading) {
     return (
       <div>
-        <Appbar />
         <div className="flex justify-center px-4 sm:px-6 lg:px-8">
           <div className="w-full max-w-3xl">
             <BlogSkeleton />
@@ -25,7 +24,6 @@ export const Blogs = () => {
 
   return (
     <div>
-      <Appbar />
       <div className="flex justify-center px-4 sm:px-6 lg:px-8">
         <div className="w-full max-w-3xl">
           {blogs.length > 0 ? (

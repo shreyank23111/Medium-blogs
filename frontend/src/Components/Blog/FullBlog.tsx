@@ -1,12 +1,10 @@
 import { Blog } from "../../Hooks";
-import { Appbar } from "../Appbar/nav";
 import { Avatar } from "./BlogCard";
 
 export const FullBlog = ({ blog }: { blog: Blog }) => {
   if (!blog) {
     return (
       <div>
-        <Appbar />
         <div className="flex justify-center items-center h-screen">
           <p className="text-xl text-red-500">Invalid blog data.</p>
         </div>
@@ -16,7 +14,6 @@ export const FullBlog = ({ blog }: { blog: Blog }) => {
 
   return (
     <div>
-      <Appbar />
       <div className="flex justify-center py-12 px-4 md:px-8 lg:px-12 bg-slate-50">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 w-full max-w-screen-xl">
           <div className="col-span-1 md:col-span-8">
