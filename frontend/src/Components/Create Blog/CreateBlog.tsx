@@ -5,7 +5,12 @@ import { BlogInputs } from "./BlogInputs";
 import { useNavigate } from "react-router-dom";
 import { BACKEND_URL } from "../../config";
 
-export const CreateBlog = () => {
+interface CreateBlogProps {
+  onClose: () => void; 
+}
+
+
+export const CreateBlog = ({onClose}: CreateBlogProps) => {
   const navigate = useNavigate();
   const [userInputs, setUserInputs] = useState<CreateBlogInput>({
     title: "",
@@ -20,6 +25,7 @@ export const CreateBlog = () => {
         }
       });
       console.log(response.data);
+      onClose();
       navigate("/blogs");
     } catch (err) {
       alert("Unable to create blog");

@@ -5,9 +5,12 @@ import { useNavigate } from "react-router-dom"
 import { BACKEND_URL } from "../../config";
 import { LabelledInput } from "./LabelledInputs";
 import { Heading } from "./Heading";
+import { useSetRecoilState } from "recoil";
+import { authState } from "../../Store/authState";
 
 export const Signup = () => {
   const navigate = useNavigate();
+  const setAuth = useSetRecoilState(authState);
   const [userInputs, setUserInputs] = useState<SignupInput>({
     firstName: "",
     lastName: "",
@@ -22,7 +25,8 @@ export const Signup = () => {
           "Content-Type": "application/json"
         }
       })
-      localStorage.setItem("token", response.data.token)
+      localStorage.setItem("token", response.data.token);
+      setAuth(true)
       navigate("/blogs");
     } catch(err) {
       alert("Unable to signup");

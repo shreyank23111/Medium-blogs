@@ -5,10 +5,14 @@ import { useNavigate,  } from "react-router-dom"
 import { BACKEND_URL } from "../../config";
 import { LabelledInput } from "./LabelledInputs";
 import { Heading } from "./Heading";
+import { useSetRecoilState } from "recoil";
+import { authState } from "../../Store/authState";
 // import { Signup } from "../../Pages/Signup";
 
 export const Login = () => {
   const navigate = useNavigate();
+  const setAuth = useSetRecoilState(authState);
+
   const [userInputs, setUserInputs] = useState<SigninInput>({
     email: "",
     password: ""
@@ -22,6 +26,7 @@ export const Login = () => {
         }
       })
       localStorage.setItem("token", response.data.token);
+      setAuth(true);
       navigate("/blogs")
     } catch(err){
       alert("Error in Login");
@@ -34,7 +39,7 @@ export const Login = () => {
           
           <Heading type={"signin"} />
         
-              <LabelledInput label="Username" placeholder="harkirat@gmail.com" onChange={(e) => {
+              <LabelledInput label="Username" placeholder="shreyank@gmail.com" onChange={(e) => {
                   setUserInputs({
                       ...userInputs,
                       email: e.target.value
