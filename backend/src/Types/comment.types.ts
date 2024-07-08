@@ -15,5 +15,19 @@ export interface commentResponse {
 
 export interface updateCommentData{
   content: string,
-  userId: string
+  id: string
+  postId: string
 } 
+
+export interface getAllComments {
+  comments: Array<{
+    id: string,
+    content: string,
+    userId: string,
+    postId: string,
+    createdAt: Date,
+    author: {
+      firstName: string
+    }
+  }>
+}
