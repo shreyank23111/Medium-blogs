@@ -48,7 +48,7 @@ export const updateBlog = async(c: Context, data: updateBlogData): Promise< blog
 
   return {blog};
 }
-const ans = "Hello"
+
 
 export const getBlog = async(c: Context): Promise<getBlogResponse | {error: string}> => {
   const prisma = c.get("prisma") as PrismaClient;
