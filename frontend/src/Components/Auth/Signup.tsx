@@ -15,7 +15,7 @@ interface ServerError {
 
 export const Signup = () => {
   const navigate = useNavigate();
-  const setAuth = useSetRecoilState(authState);
+  const setAuthState = useSetRecoilState(authState);
   const [error, setError] = useState<{ [key: string]: string }>({});
   const [userInputs, setUserInputs] = useState<SignupInput>({
     firstName: "",
@@ -51,7 +51,10 @@ export const Signup = () => {
       );
       localStorage.setItem("token", response.data.token);
 
-      setAuth(true);
+      setAuthState({
+        isAuthenticated: true,
+        user: response.data.user
+      })
       navigate("/blogs");
       setError({});
 
