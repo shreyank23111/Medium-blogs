@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { Avatar } from '../Blog/BlogCard';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { authState, currentUserSelector, isLoggedInSelector } from '../../Store/authState';
+import { useRecoilValue } from 'recoil';
+import {  currentUserSelector, isLoggedInSelector } from '../../Store/authState';
 import { useEffect, useState } from 'react';
 
 interface AppbarProps {
@@ -11,13 +11,11 @@ interface AppbarProps {
 export const Appbar = ({ openModal }: AppbarProps) => {
   const navigate = useNavigate();
   const isLoggedIn = useRecoilValue(isLoggedInSelector);
-  const setAuth = useSetRecoilState(authState);
   const [showMenu, setShowMenu] = useState(false);
   const currentUser = useRecoilValue(currentUserSelector);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
-    setAuth(false);
     navigate('/login');
   };
 
