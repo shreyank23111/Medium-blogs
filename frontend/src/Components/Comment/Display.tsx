@@ -1,5 +1,10 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { BlogSkeleton } from "../../Components/Blog/BlogSkeleton";
+import { DeleteComment } from "./DeleteComment";
+import { useRecoilValue } from "recoil";
+import { currentUserSelector } from "../../Store/authState";
+import { BACKEND_URL } from "../../config";
 
 interface RouteParams {
   postId: string;
@@ -18,19 +23,19 @@ interface Comment {
 }
 
 export const DisplayComment = ({ postId, refresh }: RouteParams) => {
+  const [loading, setLoading] = useState(true);
   const [comments, setComments] = useState<Comment[]>([]);
-  const [showMenu, setShowMenu] = useState<string | null>(null);
+
+  const currentUser = useRecoilValue(currentUserSelector);
 
   useEffect(() => {
     fetchComments();
   }, [refresh]);
 
   async function fetchComments() {
-  
-    
     try {
       const response = await axios.get(
-        `http://127.0.0.1:8787/api/v1/comment/get-comments`,
+        `${BACKEND_URL}/api/v1/comment/get-comments`,
         {
           params: { postId },
           headers: {
@@ -46,64 +51,42 @@ export const DisplayComment = ({ postId, refresh }: RouteParams) => {
     } catch (err) {
       console.error("Error fetching comments: ", err);
       setComments([]);
+    } finally {
+      setLoading(false);
     }
   }
 
-  async function updateComment(id: string, content: string) {
-    // console.log(id);
-    
-    try {
-      // console.log(id);
-      const response = await axios.put(
-        `http://127.0.0.1:8787/api/v1/comment/update-comment/${id}`,
-        { content },
-        {
-          headers: {
-            Authorization: "Bearer " + (localStorage.getItem("token") || "")
-          }
-        }
-      );
-      setComments(comments.map(comment => (comment.id === id ? response.data.comment : comment)));
-    } catch (err) {
-      // console.log(id);
-      console.error("Update comment error: ", err);
-    }
+
+  if(loading){
+    return(
+      <div>
+      <div className="flex justify-center px-4 sm:px-6 lg:px-8">
+          <div className="w-full max-w-3xl">
+            <BlogSkeleton />
+            <BlogSkeleton />
+            <BlogSkeleton />
+          </div>
+        </div>
+    </div>
+    )
   }
+
+ 
 
   return (
     <div className="space-y-4 bg-slate-200 p-5">
       {comments && comments.length > 0 ? (
         comments.map((comment) => (
-          <div key={comment.id} className="p-4 bg-white rounded-md shadow-md relative">
+          <div key={comment.id} className="p-4 bg-slate-300 rounded-md shadow-md relative">
             <p>{comment.content}</p>
             <p className="text-sm text-gray-500">- {comment.author.firstName}</p>
-            <div className="absolute top-2 right-2">
-              <button onClick={() => setShowMenu(comment.id)}>
-                <svg className="w-6 h-6 text-gray-500" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 7a2 2 0 110-4 2 2 0 010 4zm0 5a2 2 0 110-4 2 2 0 010 4zm0 5a2 2 0 110-4 2 2 0 010 4z" />
-                </svg>
-              </button>
-              {showMenu === comment.id && (
-                <div className="absolute right-0 w-48 py-2 mt-2 bg-white rounded-md shadow-xl z-20">
-                  <button
-                    onClick={() => {
-                      const newContent = prompt("Update comment", comment.content);
-                      if (newContent) {
-                        updateComment(comment.id, newContent);
-                      }
-                    }}
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
-                  >
-                    Update
-                  </button>
-                  <button
-                    // onClick={() => deleteComment(comment.id)}
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
-                  >
-                    Delete
-                  </button>
+            <div className="absolute top-2 right-2">             
+                {currentUser && currentUser.id === comment.userId  &&(
+                  <div className="absolute right-5 p-3 rounded-md z-20">
+                  <DeleteComment id={comment.id} onDelete={fetchComments}/>
                 </div>
-              )}
+                )}
+            
             </div>
           </div>
         ))

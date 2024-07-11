@@ -34,9 +34,13 @@ export const Blogs = () => {
 
   return (
     <div>
-      <CreateBox fetchBlog={handleFetchBlogs}/>
+
+     <div className="px-4">
+       <CreateBox fetchBlog={handleFetchBlogs}/>
+     </div>
+
       <div>
-      <div className="flex justify-center px-4 sm:px-6 lg:px-28">
+      <div className="flex justify-center px-4 sm:px-6  lg:px-28 bg-slate-200">
         <div className="w-full max-w-3xl">
           {blogs.length > 0 ? (
             blogs.map((blog) => (

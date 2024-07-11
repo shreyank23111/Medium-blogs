@@ -77,6 +77,6 @@ export const DeleteBlog = async(c: Context) => {
     return c.json(result, 200);
   }  catch(err) {
     console.log(err);
-    return c.json({error: "Unable to find Blogs"}, 422);
+    return c.json({error: "Unable to delete Blogs"}, 422);
   }
 }

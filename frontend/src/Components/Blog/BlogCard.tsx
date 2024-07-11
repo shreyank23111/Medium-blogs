@@ -17,7 +17,7 @@ export const BlogCard = ({
 }: BlogCardProps) => {
   return (
     <Link to={`/blogs/get-blog/${id}`} className="w-full sm:w-1/2 lg:w-1/3 p-2">
-      <div className="p-4 rounded-md bg-slate-100 border border-slate-900">
+      <div className="p-4 rounded-md #ffd60a bg-customBlue border border-slate-900">
         <div className="flex items-center">
           <Avatar name={authorName} />
           <div className="font-extralight pl-2 text-sm">{authorName}</div>
@@ -66,8 +66,8 @@ export function Avatar({ name, size = "small" }: AvatarProps) {
         size === "small" ? "w-6 h-6" : "w-10 h-10"
       }`}
     >
-      <span className={`${size === "small" ? "text-xs" : "text-md"} font-extralight text-gray-600 dark:text-gray-300`}>
-        {initials}
+      <span className={`${size === "small" ? "text-xs" : "text-md"}  text-white`}>
+         {initials.toUpperCase()}
       </span>
     </div>
   );

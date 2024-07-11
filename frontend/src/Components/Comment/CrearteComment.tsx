@@ -1,6 +1,7 @@
 import { CreateCommentInput } from "@shreyank23/medium-common"
 import axios from "axios";
 import { useState } from "react"
+import { BACKEND_URL } from "../../config";
 // import { BACKEND_URL } from "../../config";
 // import { useParams } from "react-router-dom";
 
@@ -17,7 +18,7 @@ export const CreateComment = ({postId, onCommentAdded}: RouteParams) => {
 
   async function sendRequest() {
     try{
-      await axios.post(`http://127.0.0.1:8787/api/v1/comment/write-comment`, 
+      await axios.post(`${BACKEND_URL}/api/v1/comment/write-comment`, 
         {
           content: comment.content, 
           postId: postId,

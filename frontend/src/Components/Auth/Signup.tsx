@@ -80,7 +80,7 @@ export const Signup = () => {
   }
 
   return (
-    <div className="h-screen flex justify-center items-center bg-slate-300">
+    <div className="h-screen flex justify-center items-center">
       <div className="w-full max-w-md p-8 rounded-lg shadow-md bg-slate-50">
         <Heading type={"signup"} />
         <LabelledInput

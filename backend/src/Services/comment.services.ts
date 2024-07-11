@@ -84,3 +84,15 @@ export const allComments = async(c: Context, data: {postId: string}): Promise<ge
 
   return {comments}
 }
+
+export const deleteComment = async(c:Context, commentId: string) => {
+  const prisma = c.get("prisma") as PrismaClient;
+
+  const comment = await prisma.comment.delete({
+    where: {
+      id: commentId
+    }
+  })
+
+  return {comment}
+}

@@ -1,5 +1,5 @@
 import { Context } from "hono";
-import { allComments, makeComment, updateComment } from "../Services/comment.services";
+import { allComments, deleteComment, makeComment, updateComment } from "../Services/comment.services";
 
 
 export const Comment = async(c: Context) => {
@@ -69,4 +69,21 @@ export const GetAllComment = async(c: Context) => {
     console.log(err);
     return c.json({error: "Unable to get Comment"}, 422);
   }
+}
+
+export const DeleteComment = async(c: Context) => {
+  const commentId = c.req.param("id");
+
+  if (!commentId) {
+    return c.json({ error: "commentId is required" }, 400);
+  }
+
+  try{
+    const result = await deleteComment(c, commentId);
+    return c.json(result, 200);
+  }  catch(err) {
+    console.log(err);
+    return c.json({error: "Unable to delete comment"}, 422);
+  }
+
 }

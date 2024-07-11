@@ -19,7 +19,7 @@ export const CreateBox = ({ fetchBlog }: CreateBoxProps) => {
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-bold text-white">Write fearlessly...</h2>
         <button
-          className="bg-red-500 px-4 py-2 rounded-md text-white"
+          className="bg-red-500 px-4 py-3 rounded-md text-white"
           onClick={() => setShowCreateBlog(true)}
         >
           New Blog
