@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Full Screen Layout</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            background-color: #2c2c2c;
+            color: white;
+        }
+        .container {
+            width: 95%;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #444;
+            border-radius: 8px;
+            background-color: #1e1e1e;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #555;
+            color: white;
+            cursor: pointer;
+        }
+        .post, .comment-section, .single-comment {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #444;
+            border-radius: 8px;
+            background-color: #333;
+        }
+        .post .info, .comment-section .info {
+            display: flex;
+            align-items: center;
+        }
+        .post .info img, .comment-section .info img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .post .actions, .comment-section .actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        .post .actions button, .comment-section .actions button {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #555;
+            color: white;
+            cursor: pointer;
+        }
+        .single-comment .info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .single-comment .info img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <input type="text" placeholder="Search...">
+            <div>
+                <button>Create</button>
+                <button>Logout</button>
+            </div>
+        </div>
+        <div class="post">
+            <div class="info">
+                <img src="https://tse1.mm.bing.net/th?id=OIP.FjF3LuYtgk-w36eoHh1sogHaHa&pid=Api&P=0&h=180" alt="User Avatar">
+                <input type="text" placeholder="Username" disabled>
+            </div>
+            <input type="text" placeholder="Title" style="width: 100%; margin-top: 10px;">
+            <textarea placeholder="Description" style="width: 100%; margin-top: 10px; height: 100px;"></textarea>
+            <div class="actions">
+                <button>Likes</button>
+                <button>Comments</button>
+            </div>
+        </div>
+        <div class="comment-section">
+            <div class="info">
+                <img src="https://tse1.mm.bing.net/th?id=OIP.FjF3LuYtgk-w36eoHh1sogHaHa&pid=Api&P=0&h=180" alt="User Avatar">
+                <input type="text" placeholder="Add a comment" style="flex: 1;">
+            </div>
+            <button>Post</button>
+        </div>
+        <div>
+            <p>Number of comments</p>
+            <div class="single-comment">
+                <div class="info">
+                    <img src="https://tse1.mm.bing.net/th?id=OIP.FjF3LuYtgk-w36eoHh1sogHaHa&pid=Api&P=0&h=180" alt="User Avatar">
+                    <input type="text" placeholder="Username" disabled>
+                </div>
+                <textarea placeholder="Comment" style="width: 100%;"></textarea>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,5 +1,5 @@
 import { Context } from "hono";
-import { createBlog, updateBlog, getBlog , getBulkBlog} from "../Services/blog.services";
+import { createBlog, updateBlog, getBlog , getBulkBlog, deleteBlog} from "../Services/blog.services";
 
 export const CreateBlog = async(c: Context) => {
   const data = await c.req.json();
@@ -68,3 +68,15 @@ export const GetBulkBlog = async(c: Context) => {
     return c.json({error: "Unable to find Blogs"}, 422);
   }
 } 
+
+export const DeleteBlog = async(c: Context) => {
+  const postId = c.req.param("id");
+
+  try{
+    const result = await deleteBlog(c, postId);
+    return c.json(result, 200);
+  }  catch(err) {
+    console.log(err);
+    return c.json({error: "Unable to find Blogs"}, 422);
+  }
+}

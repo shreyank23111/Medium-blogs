@@ -17,7 +17,7 @@ export const BlogCard = ({
 }: BlogCardProps) => {
   return (
     <Link to={`/blogs/get-blog/${id}`} className="w-full sm:w-1/2 lg:w-1/3 p-2">
-      <div className="p-4 border border-slate-200 rounded-md bg-slate-100">
+      <div className="p-4 rounded-md bg-slate-100 border border-slate-900">
         <div className="flex items-center">
           <Avatar name={authorName} />
           <div className="font-extralight pl-2 text-sm">{authorName}</div>
@@ -27,7 +27,7 @@ export const BlogCard = ({
           <div className="pl-2 font-thin text-slate-500 text-sm">{publishedDate}</div>
         </div>
         <div className="text-xl font-semibold pt-2">{title}</div>
-        <div className="text-md font-thin break-words overflow-hidden">
+        <div className="text-lg font-thin break-words overflow-hidden">
           {(content?.slice(0, 100) || "") + "..."}
         </div>
         <div className="text-slate-500 text-sm font-thin pt-4">
@@ -42,7 +42,24 @@ export function Circle() {
   return <div className="h-1 w-1 rounded-full bg-slate-500"></div>;
 }
 
-export function Avatar({ name, size = "small" }: { name: string, size?: "small" | "big" }) {
+interface User {
+  id: string;
+  firstName: string;
+}
+
+type AvatarProps = {
+  name: string | null | undefined | User;
+  size?: "small" | "big";
+};
+
+export function Avatar({ name, size = "small" }: AvatarProps) {
+  let initials = '';
+
+  if (typeof name === 'string') {
+    initials = name[0];
+  } else if (name && typeof name === 'object') {
+    initials = name.firstName[0]; // Adjust as per your User interface
+  }
   return (
     <div
       className={`relative inline-flex items-center justify-center overflow-hidden bg-gray-600 rounded-full ${
@@ -50,7 +67,7 @@ export function Avatar({ name, size = "small" }: { name: string, size?: "small" 
       }`}
     >
       <span className={`${size === "small" ? "text-xs" : "text-md"} font-extralight text-gray-600 dark:text-gray-300`}>
-        {name[0]}
+        {initials}
       </span>
     </div>
   );

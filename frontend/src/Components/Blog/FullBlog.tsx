@@ -1,7 +1,22 @@
 import { Blog } from "../../Hooks";
+import {  CreateComment } from "../Comment/CrearteComment";
+import { DisplayComment } from "../Comment/Display";
 import { Avatar } from "./BlogCard";
+import { useState } from "react";
+import { DeleteBlog } from "./DeleteBlog";
+import { useRecoilValue } from "recoil";
+import { currentUserSelector } from "../../Store/authState";
 
 export const FullBlog = ({ blog }: { blog: Blog }) => {
+  const [refreshComments, setRefreshComments] = useState(false);
+  const currentUser = useRecoilValue(currentUserSelector);
+
+  const isAuthor = currentUser && currentUser.firstName === blog.author.firstName;
+
+  const handleCommentAdded = () => {
+    setRefreshComments(!refreshComments); // Toggle state to trigger re-fetch
+  };
+
   if (!blog) {
     return (
       <div>
@@ -39,8 +54,13 @@ export const FullBlog = ({ blog }: { blog: Blog }) => {
               </div>
             </div>
           </div>
+          {isAuthor && (
+          <DeleteBlog id={blog.id} />
+        )}
         </div>
       </div>
+      <CreateComment postId={blog.id} onCommentAdded={handleCommentAdded}/>
+      <DisplayComment postId={blog.id} refresh={refreshComments}/>
     </div>
   );
 };

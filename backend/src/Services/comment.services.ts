@@ -3,12 +3,11 @@ import { commentResponse, createCommentData, getAllComments, updateCommentData }
 import { PrismaClient } from "@prisma/client";
 import { createCommentInput, updateCommentInput } from "@shreyank23/medium-common";
 
-export const makeComment = async(c: Context, data: createCommentData): Promise<commentResponse | {error: string}> => {
+export const makeComment = async(c: Context, data: createCommentData, userIds: string): Promise<commentResponse | {error: string}> => {
   const prisma = c.get("prisma") as PrismaClient;
-  const userId = c.get("token");
+  // const userId = c.get("token");
+  // console.log(userId);
 
-  // const postId = c.get("postId"); id is coming as undefined
-  // const postId = c.req.param("id"); id is coming as undefined
 
   const validate = createCommentInput.safeParse(data);
 
@@ -16,14 +15,11 @@ export const makeComment = async(c: Context, data: createCommentData): Promise<c
     return {error: "invalid inputs"}
   }
 
-  
-
   const comment = await prisma.comment.create({
     data: {
       content: data.content,
-      userId: userId,
       postId: data.postId,
-      likes: 0
+      userId: userIds
     }
   })
 

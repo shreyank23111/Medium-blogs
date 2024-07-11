@@ -2,9 +2,19 @@
 import { useBlogs } from "../Hooks";
 import { BlogSkeleton } from "../Components/Blog/BlogSkeleton";
 import { BlogCard } from "../Components/Blog/BlogCard";
+import { CreateBox } from "../Components/Create Blog/CreateBox";
+import { useEffect } from "react";
 
 export const Blogs = () => {
-  const { loading, blogs } = useBlogs();
+  const { loading, blogs, fetchBlogs } = useBlogs();
+
+  const handleFetchBlogs = async () => {
+    await fetchBlogs();
+  };
+
+  useEffect(() => {
+    handleFetchBlogs();
+  }, []);
 
   if (loading) {
     return (
@@ -24,7 +34,9 @@ export const Blogs = () => {
 
   return (
     <div>
-      <div className="flex justify-center px-4 sm:px-6 lg:px-8">
+      <CreateBox fetchBlog={handleFetchBlogs}/>
+      <div>
+      <div className="flex justify-center px-4 sm:px-6 lg:px-28">
         <div className="w-full max-w-3xl">
           {blogs.length > 0 ? (
             blogs.map((blog) => (
@@ -42,6 +54,7 @@ export const Blogs = () => {
           )}
         </div>
       </div>
+    </div>
     </div>
   );
 };

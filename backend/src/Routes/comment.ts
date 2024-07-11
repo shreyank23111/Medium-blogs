@@ -5,10 +5,11 @@ import { authCheck } from "../Middlewares/auth.middleware";
 
 const commentRouters = new Hono();
 
+commentRouters.get("/get-comments", GetAllComment)
 commentRouters.use("*", authCheck);
 
 commentRouters.post("/write-comment", Comment);
 commentRouters.put("/update-comment", UpdateComment)
-commentRouters.get("/get-comments", GetAllComment)
+
 
 export { commentRouters }

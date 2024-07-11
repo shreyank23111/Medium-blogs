@@ -4,9 +4,17 @@ import { allComments, makeComment, updateComment } from "../Services/comment.ser
 
 export const Comment = async(c: Context) => {
   const data = await c.req.json();
+  const userId = c.get("token");
+
+  
+
+  if (!userId) {
+    return c.json({ message: "Unauthorized" }, 401);
+  }
+
 
   try{
-    const result = await makeComment(c, data);
+    const result = await makeComment(c, data ,userId);
     if("error" in result){
       return c.json({message: result.error})
     }
@@ -55,7 +63,6 @@ export const GetAllComment = async(c: Context) => {
     }
 
     return c.json({
-      message: "All Comment",
       comment: result.comments
     }, 200)
   } catch(err) {

@@ -100,3 +100,15 @@ export const getBulkBlog = async(c: Context): Promise<getBulkBlogResponse | {err
 
   return {blogs}
 }
+
+export const deleteBlog = async(c: Context, postId: string) => {
+  const prisma = c.get("prisma") as PrismaClient;
+
+  const blog = await prisma.post.delete({
+    where: {
+      id: postId
+    }
+  })
+
+  return {blog}
+}
