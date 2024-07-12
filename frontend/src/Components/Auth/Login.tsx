@@ -44,12 +44,17 @@ export const Login = () => {
           'Content-Type': "application/json"
         }
       })
+
+      const user = response.data.user
+
       localStorage.setItem("token", response.data.token);
+      localStorage.setItem("user", JSON.stringify(user));
 
       setAuthState({
         isAuthenticated: true,
-        user: response.data.user
+        user: user
       })
+      
       navigate("/blogs");
       setError({});
 

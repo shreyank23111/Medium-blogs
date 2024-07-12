@@ -6,12 +6,14 @@ import { useState } from "react";
 import { DeleteBlog } from "./DeleteBlog";
 import { useRecoilValue } from "recoil";
 import { currentUserSelector } from "../../Store/authState";
+import { UpdateBlog } from "./updateBlog";
 
 export const FullBlog = ({ blog }: { blog: Blog }) => {
   const [refreshComments, setRefreshComments] = useState(false);
   const currentUser = useRecoilValue(currentUserSelector);
+  const [isEditing, setIsEdeting] = useState(false);
 
-  const isAuthor = currentUser && currentUser.firstName === blog.author.firstName;
+  const isAuthor = currentUser && currentUser.id === blog.author.id;
 
   const handleCommentAdded = () => {
     setRefreshComments(!refreshComments); // Toggle state to trigger re-fetch
@@ -31,17 +33,22 @@ export const FullBlog = ({ blog }: { blog: Blog }) => {
     <div>
       <div className="flex justify-center py-12 px-4 md:px-8 lg:px-12 bg-slate-50">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 w-full max-w-screen-xl">
-          <div className="col-span-1 md:col-span-8">
+          {isEditing ? (
+            <UpdateBlog onSave={() => setIsEdeting(false)}/>
+          ) : (
+            <div className="col-span-1 md:col-span-8">
             <div className="mb-6">
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold">{blog.title}</h1>
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold">
+              {blog.title}
+              </h1>
               <p className="text-slate-500 pt-2">{new Date(blog.publishedAt).toLocaleDateString()}</p>
             </div>
             <p>Details: </p>
-            <div className="prose lg:prose-xl text-lg md:text-xl lg:text-2xl break-words overflow-hidden bg-slate-100 p-10 rounded-lg mt-1"
-            >
+            <div className="prose lg:prose-xl text-lg md:text-xl lg:text-2xl break-words overflow-hidden bg-slate-100 p-10 rounded-lg mt-1">
               {blog.content}
             </div>
           </div>
+          )}
           <div className="col-span-1 md:col-span-4 bg-slate-200 p-5 rounded-lg">
             <div className="text-slate-600 text-lg mb-4">Author</div>
             <div className="flex items-center">
@@ -55,7 +62,14 @@ export const FullBlog = ({ blog }: { blog: Blog }) => {
             </div>
           </div>
           {isAuthor && (
+          <>
+          <button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
+          onClick={() => setIsEdeting(true)}
+          >
+            Update
+          </button>
           <DeleteBlog id={blog.id} />
+          </>
         )}
         </div>
       </div>

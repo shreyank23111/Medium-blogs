@@ -10,6 +10,7 @@ export interface Blog {
   publishedAt: string;
   author: {
     firstName: string;
+    id: string
   };
 }
 

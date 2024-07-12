@@ -63,7 +63,8 @@ export const getBlog = async(c: Context): Promise<getBlogResponse | {error: stri
       createdAt: true,
       author: {
         select: {
-          firstName: true
+          firstName: true,
+          id: true
         }
       }
     }

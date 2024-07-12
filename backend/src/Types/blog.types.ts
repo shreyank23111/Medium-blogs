@@ -27,6 +27,7 @@ export interface getBlogResponse {
     createdAt: Date
     author: {
       firstName: string
+      id: string
     }
   } 
 }
